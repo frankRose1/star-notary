@@ -4,10 +4,12 @@ This dapp allows users to notarize(own) a star if it isn't owned by anyone yet. 
 
 ## Instructions
 
+    - You will need an ethereum wallet such as Metamask in order to run this locally
     - Download or clone this repo
     - npm install
     1) To run the backend
         - ```truffle develop``` to start a development console
+           - import at least two of the test accounts to Metamask
         - In the dev console run the following commands
             - ```compile``` to compile solidity contracts
             - ```migrate --reset``` or migrating the contract to the locally running Ethereum network

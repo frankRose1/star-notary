@@ -5,7 +5,12 @@ import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol"
 contract StarNotary is ERC721 {
     struct Star {
         string name;
+        bool exists;
     }
+
+    // Name and Symbol delcarations
+    string public constant tokenName = "Star Notary Token";
+    string public constant tokenSymbol = "STN";
 
     //map a uint ID to each instance of the Star struct
     mapping(uint256 => Star) public tokenIdToStarInfo;
@@ -19,7 +24,7 @@ contract StarNotary is ERC721 {
         @param _tokenId - uint256 ID to identify the star
      */
     function createStar(string memory _name, uint256 _tokenId) public {
-        Star memory newStar = Star(_name);
+        Star memory newStar = Star(_name, true);
         tokenIdToStarInfo[_tokenId] = newStar;
         // _mint assign the star with _tokenId to the sender address(ownership)
         _mint(msg.sender, _tokenId);
@@ -66,5 +71,23 @@ contract StarNotary is ERC721 {
         }
         //remove the star for sale
         starsForSale[_tokenId] = 0;
+    }
+
+    /**
+      @dev Look up a token with a provided ID
+      @param _tokenId uint256 representing a token ID
+      @return name of the token
+     */
+    function lookUptokenIdToStarInfo(uint256 _tokenId)
+        public
+        view
+        returns (string memory)
+    {
+        require(
+            tokenIdToStarInfo[_tokenId].exists == true,
+            "No star found with that ID."
+        );
+        Star memory star = tokenIdToStarInfo[_tokenId];
+        return star.name;
     }
 }

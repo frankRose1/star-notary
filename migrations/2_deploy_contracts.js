@@ -1,5 +1,5 @@
-const MetaCoin = artifacts.require('StarNotary');
+const StarNotary = artifacts.require('StarNotary');
 
 module.exports = function(deployer) {
-  deployer.deploy(MetaCoin);
+  deployer.deploy(StarNotary);
 };
