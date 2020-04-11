@@ -6,7 +6,7 @@ const App = {
   account: null,
   meta: null,
 
-  start: async function() {
+  start: async function () {
     const { web3 } = this;
 
     try {
@@ -25,24 +25,26 @@ const App = {
     }
   },
 
-  setStatus: function(message) {
+  setStatus: function (message) {
     const status = document.getElementById('status');
     status.innerHTML = message;
   },
 
-  createStar: async function() {
-    console.log(`This account ${this.account}`);
+  createStar: async function () {
     const { createStar } = this.meta.methods;
     const name = document.getElementById('starName').value;
     const id = document.getElementById('starId').value;
     await createStar(name, id).send({ from: this.account });
     App.setStatus(`New Star Owner is ${this.account}.`);
-  }
+  },
+
+  // TODO: lookup a star
+  lookUp: async function () {},
 };
 
 window.App = App;
 
-window.addEventListener('load', async function() {
+window.addEventListener('load', async function () {
   if (window.ethereum) {
     //use Metamask's provider
     App.web3 = new Web3(window.ethereum);

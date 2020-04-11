@@ -2,6 +2,14 @@
 
 This dapp allows users to notarize(own) a star if it isn't owned by anyone yet. Once a user creates/owns a star they can list it for sale. Users can also buy stars from other ethereum addresses. This project uses the ERC721 interface as each star represents a Non-Fungible Token.
 
+## Details
+
+    - truffle version: 5.1.8
+    - OpenZeppelin version: 2.4.0
+    - ERC-721 Token Name: Star Notary Token
+    - ERC-721 Token Symbol: STN
+    - Token Address on the Rinkeby Network: PENDING
+
 ## Instructions
 
     - You will need an ethereum wallet such as Metamask in order to run this locally

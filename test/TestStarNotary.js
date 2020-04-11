@@ -3,7 +3,7 @@ const StarNotary = artifacts.require('StarNotary');
 let accounts;
 let owner;
 
-contract('StarNotary', async accs => {
+contract('StarNotary', async (accs) => {
   accounts = accs;
   owner = accounts[0];
 });
@@ -79,8 +79,8 @@ it("lets user2 buy a star and decreases user2's balance in ether", async () => {
 
 it('can add the star name and star symbol properly', async () => {
   const instance = await StarNotary.deployed();
-  const name = await instance.starName.call();
-  const symbol = await instance.starToken.call();
+  const name = await instance.tokenName.call();
+  const symbol = await instance.tokenSymbol.call();
   assert.equal(name, 'Star Notary Token');
   assert.equal(symbol, 'STN');
 });
