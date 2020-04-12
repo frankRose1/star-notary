@@ -2,6 +2,7 @@ pragma solidity >=0.4.24;
 
 import "../node_modules/openzeppelin-solidity/contracts/token/ERC721/ERC721.sol";
 
+
 contract StarNotary is ERC721 {
     struct Star {
         string name;
@@ -15,7 +16,7 @@ contract StarNotary is ERC721 {
     //map a uint ID to each instance of the Star struct
     mapping(uint256 => Star) public tokenIdToStarInfo;
 
-    //map a price to a Star ID
+    //map a token ID to a price
     mapping(uint256 => uint256) public starsForSale;
 
     /**
@@ -89,5 +90,38 @@ contract StarNotary is ERC721 {
         );
         Star memory star = tokenIdToStarInfo[_tokenId];
         return star.name;
+    }
+
+    /**
+      @dev Allow two users to exchange stars.
+      @param token1Id uint256 represinting the token of the function caller
+      @param token2Id uint256 represinting the token of transferee
+      @param transferee address of the other user who is exchanging their token(token2Id)
+     */
+    function exchangeStars(
+        uint256 token1Id,
+        uint256 token2Id,
+        address transferee
+    ) public {
+        //make sure the tokens belong to the correct owners attempting to exchange
+        require(ownerOf(token1Id) == msg.sender, "You don't own this token!");
+        require(
+            ownerOf(token2Id) == transferee,
+            "The transferee address provided does not own that token."
+        );
+
+        //make sure the two stars are listed for sale
+        require(
+            starsForSale[token1Id] > 0,
+            "Your star is not listed for sale and can't be exchanged."
+        );
+        require(
+            startsForSale[token2Id] > 0,
+            "The transferee's star is not listed for sale and can't be exchanged."
+        );
+
+        //emit two separate Transfer events(seen in ERC721 interface)
+        _transferFrom(msg.sender, transferee, token1Id);
+        _transferFrom(transferee, msg.sender, token2Id);
     }
 }
