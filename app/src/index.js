@@ -38,8 +38,25 @@ const App = {
     App.setStatus(`New Star Owner is ${this.account}.`);
   },
 
-  // TODO: lookup a star
-  lookUp: async function () {},
+  lookUp: async function () {
+    const starId = document.getElementById('lookupId').value;
+    const result = document.getElementById('lookupResult');
+    const { lookUptokenIdToStarInfo } = this.meta.methods;
+    let starName;
+
+    try {
+      starName = await lookUptokenIdToStarInfo(starId).call();
+    } catch (err) {
+      result.innerText = `Failed to look up a star with the ID "${starId}". Please make sure you're providing a number ID.`;
+      return;
+    }
+
+    if (!starName) {
+      result.innerText = `No Result found for ID "${starId}"`;
+    } else {
+      result = `A star was found! It's name is "${starName}"`;
+    }
+  },
 };
 
 window.App = App;
